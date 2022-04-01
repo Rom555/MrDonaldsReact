@@ -32,14 +32,10 @@ const ImgLogo = styled.img`
 `;
 
 const LogInBtn = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border: none;
   background-color: transparent;
   color: white;
   font-size: 16px;
-  cursor: pointer;
 `;
 
 export const NavBar = () => (
@@ -50,7 +46,7 @@ export const NavBar = () => (
     </Logo>
     <LogInBtn>
       <img src={signImg} alt='LogIn' />
-      войти
+      <p>войти</p>
     </LogInBtn>
   </NavBarStyled>
 );
