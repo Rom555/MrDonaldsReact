@@ -12,7 +12,7 @@ const SectionMenu = styled.section`
   padding: 30px;
 `;
 
-const BannerSection = styled.section`
+const BannerSection = styled.div`
   width: 100%;
   height: 210px;
   background-image: url(${Banner});
@@ -20,18 +20,18 @@ const BannerSection = styled.section`
   background-size: cover;
 `;
 
-export const Menu = () => (
+export const Menu = ({ setOpenItem }) => (
   <MenuStyled>
     <BannerSection />
 
     <SectionMenu>
       <h2>Бургеры</h2>
-      <ListItem itemList={dbMenu.burger} />
+      <ListItem itemList={dbMenu.burger} setOpenItem={setOpenItem} />
     </SectionMenu>
 
     <SectionMenu>
       <h2>Закуски/Напитки</h2>
-      <ListItem itemList={dbMenu.other} />
+      <ListItem itemList={dbMenu.other} setOpenItem={setOpenItem} />
     </SectionMenu>
   </MenuStyled>
 );
