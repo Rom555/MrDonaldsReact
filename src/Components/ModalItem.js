@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonCheckout } from './ButtonCheckout';
 
 const Overlay = styled.div`
   position: fixed;
@@ -16,9 +17,7 @@ const Overlay = styled.div`
 const Modal = styled.div`
   width: 600px;
   height: 600px;
-  max-height: ;
   background-color: white;
-  overflow: hidden;
 `;
 
 const Banner = styled.div`
@@ -32,24 +31,14 @@ const Banner = styled.div`
 const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 20px 30px 40px;
-  height: 400px;
-  overflow: hidden;
+  height: calc(100% - 200px);
 `;
 
 const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-const Button = styled.button`
-  margin: auto auto 0;
-  min-width: 250px;
-  height: 65px;
-  background: #299b01;
-  border: none;
-  color: #fff;
-  font-size: 21px;
 `;
 
 export const ModalItem = ({ openItem, setOpenItem }) => {
@@ -73,7 +62,7 @@ export const ModalItem = ({ openItem, setOpenItem }) => {
               })}
             </h3>
           </ModalHeader>
-          <Button>Добавить</Button>
+          <ButtonCheckout>Добавить</ButtonCheckout>
         </ModalContent>
       </Modal>
     </Overlay>
