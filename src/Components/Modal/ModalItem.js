@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ButtonCheckout } from './ButtonCheckout';
+import { ButtonCheckout } from '../Style/ButtonCheckout';
 
 const Overlay = styled.div`
   position: fixed;
@@ -41,12 +41,17 @@ const ModalHeader = styled.div`
   justify-content: space-between;
 `;
 
-export const ModalItem = ({ openItem, setOpenItem }) => {
+export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
   const closeModal = (e) => {
     if (e.target.id === 'overlay') setOpenItem(null);
   };
 
-  if (!openItem) return null;
+  const order = { ...openItem };
+
+  const addToOrder = () => {
+    setOrders([...orders, order]);
+    setOpenItem(null);
+  };
 
   return (
     <Overlay id='overlay' onClick={closeModal}>
@@ -62,7 +67,7 @@ export const ModalItem = ({ openItem, setOpenItem }) => {
               })}
             </h3>
           </ModalHeader>
-          <ButtonCheckout>Добавить</ButtonCheckout>
+          <ButtonCheckout onClick={addToOrder}>Добавить</ButtonCheckout>
         </ModalContent>
       </Modal>
     </Overlay>

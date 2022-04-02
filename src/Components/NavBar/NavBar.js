@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import logoImg from '../image/logo.svg';
-import signImg from '../image/sign.svg';
+import logoImg from '../../image/logo.svg';
+import signImg from '../../image/sign.svg';
 
 const NavBarStyled = styled.header`
   position: fixed;
@@ -8,7 +8,7 @@ const NavBarStyled = styled.header`
   left: 0;
   z-index: 999;
   height: 80px;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
