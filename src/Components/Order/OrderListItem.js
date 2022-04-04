@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import trashImage from '../../image/trash.svg';
+import { toRub, totalPrice } from '../helper';
 
 const OrderItemStyled = styled.li`
   display: flex;
@@ -13,7 +14,7 @@ const ItemName = styled.span`
 const ItemPrice = styled.span`
   margin-left: 20px;
   margin-right: 10px;
-  min-width: 65px;
+  min-width: 100px;
   text-align: right;
 `;
 
@@ -32,13 +33,8 @@ export const OrderListItem = ({ order }) => {
   return (
     <OrderItemStyled>
       <ItemName>{order.name}</ItemName>
-      <span>2</span>
-      <ItemPrice>
-        {order.price.toLocaleString('ru-RU', {
-          style: 'currency',
-          currency: 'RUB',
-        })}
-      </ItemPrice>
+      <span>{order.count}</span>
+      <ItemPrice>{toRub(totalPrice(order))}</ItemPrice>
       <TrashButton />
     </OrderItemStyled>
   );

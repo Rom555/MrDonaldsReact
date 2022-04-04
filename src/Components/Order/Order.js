@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { toRub, totalPrice } from '../helper';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { OrderListItem } from './OrderListItem';
 
@@ -35,8 +36,9 @@ const Total = styled.div`
 `;
 
 const TotalPrice = styled.span`
+  margin-left: 15px;
   text-align: right;
-  min-width: 65px;
+  min-width: 100px;
 `;
 
 const EmptyList = styled.p`
@@ -44,6 +46,9 @@ const EmptyList = styled.p`
 `;
 
 export const Order = ({ orders }) => {
+  const totalSum = orders.reduce((sum, order) => sum + totalPrice(order), 0);
+  const totalCount = orders.reduce((sum, order) => sum + order.count, 0);
+
   return (
     <OrderStyled>
       <OrderTitle>ВАШ ЗАКАЗ</OrderTitle>
@@ -60,8 +65,8 @@ export const Order = ({ orders }) => {
       </OrderContent>
       <Total>
         <span>Итого</span>
-        <span>5</span>
-        <TotalPrice>850 Р</TotalPrice>
+        <span>{totalCount}</span>
+        <TotalPrice>{toRub(totalSum)}</TotalPrice>
       </Total>
       <ButtonCheckout>Оформить</ButtonCheckout>
     </OrderStyled>
