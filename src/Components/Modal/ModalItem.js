@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { toRub, totalPrice } from '../helper';
 import { useCount } from '../Hooks/useCount';
+import { useToppings } from '../Hooks/useToppings';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { CountItem } from './CountItem';
+import { Toppings } from './Toppings';
 
 const Overlay = styled.div`
   position: fixed;
@@ -51,17 +53,24 @@ const TotalPrice = styled.div`
 
 export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
   const counter = useCount();
+  const toppings = useToppings(openItem);
 
   const closeModal = (e) => {
     if (e.target.id === 'overlay') setOpenItem(null);
   };
 
-  const order = { ...openItem, count: counter.count };
+  const order = {
+    ...openItem,
+    count: counter.count,
+    topping: toppings.toppings.filter((item) => item.checked),
+  };
 
   const addToOrder = () => {
     setOrders([...orders, order]);
     setOpenItem(null);
   };
+
+  console.log(openItem);
 
   return (
     <Overlay id='overlay' onClick={closeModal}>
@@ -73,8 +82,9 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
             <h3>{toRub(openItem.price)}</h3>
           </ModalHeader>
           <CountItem {...counter} />
+          {!!openItem.toppings.length && <Toppings {...toppings} />}
           <TotalPrice>
-            <span>Цена:</span>
+            <span>Итоговая цена:</span>
             <span>{toRub(totalPrice(order))}</span>
           </TotalPrice>
           <ButtonCheckout onClick={addToOrder}>Добавить</ButtonCheckout>

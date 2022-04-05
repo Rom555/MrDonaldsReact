@@ -3,8 +3,11 @@ import trashImage from '../../image/trash.svg';
 import { toRub, totalPrice } from '../helper';
 
 const OrderItemStyled = styled.li`
-  display: flex;
   margin: 10px 0;
+`;
+
+const OrderHead = styled.div`
+  display: flex;
 `;
 
 const ItemName = styled.span`
@@ -29,13 +32,33 @@ const TrashButton = styled.button`
   background-size: contain;
 `;
 
+const Toppings = styled.div`
+  width: 100%;
+  font-size: 14px;
+  color: #9a9a9a;
+  max-width: 320px;
+`;
+
 export const OrderListItem = ({ order }) => {
   return (
-    <OrderItemStyled>
-      <ItemName>{order.name}</ItemName>
-      <span>{order.count}</span>
-      <ItemPrice>{toRub(totalPrice(order))}</ItemPrice>
-      <TrashButton />
-    </OrderItemStyled>
+    <>
+      <OrderItemStyled>
+        <OrderHead>
+          <ItemName>{order.name}</ItemName>
+          <span>{order.count}</span>
+          <ItemPrice>{toRub(totalPrice(order))}</ItemPrice>
+          <TrashButton />
+        </OrderHead>
+
+        {order.topping && (
+          <Toppings>
+            {order.topping.reduce(
+              (str, item) => (str ? `${str}, ${item.name}` : item.name),
+              ''
+            )}
+          </Toppings>
+        )}
+      </OrderItemStyled>
+    </>
   );
 };

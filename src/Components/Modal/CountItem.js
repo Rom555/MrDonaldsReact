@@ -7,18 +7,22 @@ const CountWrapper = styled.div`
 
 const CountInput = styled.input`
   width: 50px;
+  height: 27px;
   font-size: 20px;
   background-color: transparent;
-  border: none;
+  border: 1px solid #000;
   text-align: center;
 `;
 
 const CountButton = styled.button`
-  background-color: transparent;
+  width: 27px;
+  height: 27px;
+  background-color: #c4c4c4;
   border: none;
+  text-align: center;
 `;
 
-export const CountItem = ({ count, setCount, onChange }) => {
+export const CountItem = ({ count, setCount }) => {
   return (
     <CountWrapper>
       <span>Количество</span>
@@ -26,7 +30,7 @@ export const CountItem = ({ count, setCount, onChange }) => {
         <CountButton disabled={count <= 1} onClick={() => setCount(count - 1)}>
           -
         </CountButton>
-        <CountInput disabled type='number' min='1' max='100' value={count} />
+        <CountInput disabled type='text' min='1' max='100' value={count} />
         <CountButton onClick={() => setCount(count + 1)}>+</CountButton>
       </div>
     </CountWrapper>

@@ -5,4 +5,9 @@ export const toRub = (price) => {
   });
 };
 
-export const totalPrice = (order) => order.price * order.count;
+export const totalPrice = (order) => {
+  const countToppings = order.topping && order.topping.length;
+  const priceToppings = order.price * 0.1 * countToppings;
+
+  return (order.price + priceToppings) * order.count;
+};
