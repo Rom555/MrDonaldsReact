@@ -1,22 +1,8 @@
-import styled from 'styled-components';
-
-const ToppingWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const ToppingLabel = styled.label`
-  display: inline-block;
-  width: 50%;
-  & span {
-    cursor: pointer;
-  }
-`;
-
-const ToppingInput = styled.input`
-  margin-right: 10px;
-  cursor: pointer;
-`;
+import {
+  Wrapper as ToppingWrapper,
+  Label as ToppingLabel,
+  Input as ToppingInput,
+} from './ModalStyled.js';
 
 export const Toppings = ({ toppings, checkToppings }) => (
   <>

@@ -15,7 +15,7 @@ const ItemName = styled.span`
 `;
 
 const ItemPrice = styled.span`
-  margin-left: 20px;
+  margin-left: 10px;
   margin-right: 10px;
   min-width: 100px;
   text-align: right;
@@ -39,24 +39,25 @@ const Toppings = styled.div`
   max-width: 320px;
 `;
 
-export const OrderListItem = ({ order }) => {
+export const OrderListItem = ({ order, setOrders, orders }) => {
+  const removeOrder = () => {
+    setOrders(orders.filter((item) => item !== order));
+  };
+
   return (
     <>
       <OrderItemStyled>
         <OrderHead>
-          <ItemName>{order.name}</ItemName>
+          <ItemName>
+            {order.name} {order.choice}
+          </ItemName>
           <span>{order.count}</span>
           <ItemPrice>{toRub(totalPrice(order))}</ItemPrice>
-          <TrashButton />
+          <TrashButton onClick={removeOrder} />
         </OrderHead>
 
         {order.topping && (
-          <Toppings>
-            {order.topping.reduce(
-              (str, item) => (str ? `${str}, ${item.name}` : item.name),
-              ''
-            )}
-          </Toppings>
+          <Toppings>{order.topping.map((item) => item.name).join(', ')}</Toppings>
         )}
       </OrderItemStyled>
     </>

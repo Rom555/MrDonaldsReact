@@ -10,7 +10,8 @@ const OrderStyled = styled.section`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  min-width: 380px;
+  width: 100%;
+  max-width: 380px;
   height: calc(100% - 80px);
   background: #fff;
   box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.25);
@@ -45,7 +46,7 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders }) => {
+export const Order = ({ orders, setOrders }) => {
   const totalSum = orders.reduce((sum, order) => sum + totalPrice(order), 0);
   const totalCount = orders.reduce((sum, order) => sum + order.count, 0);
 
@@ -56,7 +57,12 @@ export const Order = ({ orders }) => {
         {orders.length ? (
           <OrderList>
             {orders.map((order) => (
-              <OrderListItem order={order} />
+              <OrderListItem
+                key={order.id}
+                order={order}
+                orders={orders}
+                setOrders={setOrders}
+              />
             ))}
           </OrderList>
         ) : (

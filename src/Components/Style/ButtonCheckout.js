@@ -11,9 +11,15 @@ export const ButtonCheckout = styled.button`
   font-size: 21px;
   transition-property: color, background-color, border-color;
   transition-duration: 0.3s;
-  &:hover {
+  &:not(:disabled):hover {
     background: #fff;
     border-color: #299b01;
     color: #299b01;
+  }
+  &:disabled {
+    background: #fff;
+    border-color: grey;
+    color: grey;
+    cursor: default;
   }
 `;
