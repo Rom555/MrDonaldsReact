@@ -39,25 +39,26 @@ const Toppings = styled.div`
   max-width: 320px;
 `;
 
-export const OrderListItem = ({ order, setOrders, orders }) => {
-  const removeOrder = () => {
-    setOrders(orders.filter((item) => item !== order));
-  };
-
+export const OrderListItem = ({ order, deleteOrder, index, setOpenItem }) => {
   return (
     <>
-      <OrderItemStyled>
+      <OrderItemStyled onClick={() => setOpenItem({ ...order, index })}>
         <OrderHead>
           <ItemName>
             {order.name} {order.choice}
           </ItemName>
           <span>{order.count}</span>
           <ItemPrice>{toRub(totalPrice(order))}</ItemPrice>
-          <TrashButton onClick={removeOrder} />
+          <TrashButton onClick={(e) => deleteOrder(e, index)} />
         </OrderHead>
 
         {order.topping && (
-          <Toppings>{order.topping.map((item) => item.name).join(', ')}</Toppings>
+          <Toppings>
+            {order.topping
+              .filter((item) => item.checked)
+              .map((item) => item.name)
+              .join(', ')}
+          </Toppings>
         )}
       </OrderItemStyled>
     </>

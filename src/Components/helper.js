@@ -6,7 +6,8 @@ export const toRub = (price) => {
 };
 
 export const totalPrice = (order) => {
-  const countToppings = order.topping && order.topping.length;
+  const toppings = order.topping.filter((item) => item.checked);
+  const countToppings = toppings && toppings.length;
   const priceToppings = order.price * 0.1 * countToppings;
 
   return (order.price + priceToppings) * order.count;

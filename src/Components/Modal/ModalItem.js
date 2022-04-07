@@ -54,9 +54,10 @@ const TotalPrice = styled.div`
 `;
 
 export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
-  const counter = useCount();
+  const counter = useCount(openItem.count ? openItem.count : 1);
   const toppings = useToppings(openItem);
   const choice = useChoice();
+  const isEdit = openItem.index > -1;
 
   const closeModal = (e) => {
     if (e.target.id === 'overlay') setOpenItem(null);
@@ -65,12 +66,19 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
   const order = {
     ...openItem,
     count: counter.count,
-    topping: toppings.toppings.filter((item) => item.checked),
+    topping: toppings.toppings,
     choice: choice.choice,
   };
 
   const addToOrder = () => {
     setOrders([...orders, order]);
+    setOpenItem(null);
+  };
+
+  const editOrder = () => {
+    const newOrders = [...orders];
+    newOrders[openItem.index] = order;
+    setOrders(newOrders);
     setOpenItem(null);
   };
 
@@ -92,7 +100,7 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
           </TotalPrice>
           <ButtonCheckout
             disabled={openItem.choices && !choice.choice}
-            onClick={addToOrder}
+            onClick={isEdit ? editOrder : addToOrder}
           >
             Добавить
           </ButtonCheckout>
