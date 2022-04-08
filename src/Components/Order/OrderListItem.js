@@ -1,9 +1,11 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 import trashImage from '../../image/trash.svg';
 import { toRub, totalPrice } from '../helper';
 
 const OrderItemStyled = styled.li`
   margin: 10px 0;
+  cursor: pointer;
 `;
 
 const OrderHead = styled.div`
@@ -40,16 +42,22 @@ const Toppings = styled.div`
 `;
 
 export const OrderListItem = ({ order, deleteOrder, index, setOpenItem }) => {
+  const refDeleteButton = useRef(null);
+
   return (
     <>
-      <OrderItemStyled onClick={() => setOpenItem({ ...order, index })}>
+      <OrderItemStyled
+        onClick={(e) =>
+          e.target !== refDeleteButton.current && setOpenItem({ ...order, index })
+        }
+      >
         <OrderHead>
           <ItemName>
             {order.name} {order.choice}
           </ItemName>
           <span>{order.count}</span>
           <ItemPrice>{toRub(totalPrice(order))}</ItemPrice>
-          <TrashButton onClick={(e) => deleteOrder(e, index)} />
+          <TrashButton ref={refDeleteButton} onClick={() => !deleteOrder(index)} />
         </OrderHead>
 
         {order.topping && (

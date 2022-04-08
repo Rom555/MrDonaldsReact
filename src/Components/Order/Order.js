@@ -46,11 +46,11 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders, setOrders, setOpenItem }) => {
-  const deleteOrder = (e, index) => {
-    e.stopPropagation();
+export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn }) => {
+  const deleteOrder = (index) => {
     setOrders(orders.filter((order, i) => i !== index));
   };
+  const logOrders = () => console.log(orders);
 
   const totalSum = orders.reduce((sum, order) => sum + totalPrice(order), 0);
   const totalCount = orders.reduce((sum, order) => sum + order.count, 0);
@@ -80,7 +80,12 @@ export const Order = ({ orders, setOrders, setOpenItem }) => {
         <span>{totalCount}</span>
         <TotalPrice>{toRub(totalSum)}</TotalPrice>
       </Total>
-      <ButtonCheckout>Оформить</ButtonCheckout>
+      <ButtonCheckout
+        disabled={!orders.length}
+        onClick={authentication ? logOrders : logIn}
+      >
+        Оформить
+      </ButtonCheckout>
     </OrderStyled>
   );
 };
