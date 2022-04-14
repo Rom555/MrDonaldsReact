@@ -1,4 +1,4 @@
-import { getDatabase, push, ref, set } from 'firebase/database';
+import { push, ref, set } from 'firebase/database';
 import styled from 'styled-components';
 import { projection, toRub, totalPrice } from '../helper';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
@@ -77,7 +77,6 @@ export const Order = ({
       })
       .map(projection(rulesData));
 
-    const database = getDatabase();
     const refWithKey = push(ref(database, 'orders'));
 
     set(refWithKey, {
