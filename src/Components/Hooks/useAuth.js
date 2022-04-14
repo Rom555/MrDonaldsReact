@@ -21,7 +21,7 @@ export const useAuth = () => {
     onAuthStateChanged(auth, (user) => {
       user ? setAuthentication(user) : setAuthentication(null);
     });
-  }, [authentication]);
+  }, [auth, authentication]);
 
   return { authentication, logIn, logOut };
 };
