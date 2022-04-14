@@ -1,5 +1,6 @@
+import { getDatabase, push, ref, set } from 'firebase/database';
 import styled from 'styled-components';
-import { toRub, totalPrice } from '../helper';
+import { projection, toRub, totalPrice } from '../helper';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { OrderListItem } from './OrderListItem';
 
@@ -46,14 +47,52 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn }) => {
+const rulesData = {
+  name: ['name'],
+  count: ['count'],
+  price: ['price'],
+  topping: [
+    'topping',
+    (arr) => arr.filter((item) => item.checked).map((item) => item.name),
+    (arr) => (arr.length ? arr : 'no toppings'),
+  ],
+  choice: ['choice', (item) => (item ? item : 'no choice')],
+};
+
+export const Order = ({
+  orders,
+  setOrders,
+  setOpenItem,
+  authentication,
+  logIn,
+  database,
+}) => {
+  const totalSum = orders.reduce((sum, order) => sum + totalPrice(order), 0);
+  const totalCount = orders.reduce((sum, order) => sum + order.count, 0);
+
+  const sendOrder = () => {
+    const newOrder = orders
+      .map((order) => {
+        return { ...order, price: totalPrice(order) };
+      })
+      .map(projection(rulesData));
+
+    const database = getDatabase();
+    const refWithKey = push(ref(database, 'orders'));
+
+    set(refWithKey, {
+      nameClient: authentication.displayName,
+      email: authentication.email,
+      totalSum: totalSum,
+      order: newOrder,
+    });
+
+    setOrders([]);
+  };
+
   const deleteOrder = (index) => {
     setOrders(orders.filter((order, i) => i !== index));
   };
-  const logOrders = () => console.log(orders);
-
-  const totalSum = orders.reduce((sum, order) => sum + totalPrice(order), 0);
-  const totalCount = orders.reduce((sum, order) => sum + order.count, 0);
 
   return (
     <OrderStyled>
@@ -82,7 +121,7 @@ export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn })
       </Total>
       <ButtonCheckout
         disabled={!orders.length}
-        onClick={authentication ? logOrders : logIn}
+        onClick={authentication ? sendOrder : logIn}
       >
         Оформить
       </ButtonCheckout>

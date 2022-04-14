@@ -92,7 +92,7 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
             <h3>{toRub(openItem.price)}</h3>
           </ModalHeader>
           <CountItem {...counter} />
-          {!!openItem.toppings.length && <Toppings {...toppings} />}
+          {!!openItem.toppings?.length && <Toppings {...toppings} />}
           {openItem.choices && <Choice {...choice} openItem={openItem} />}
           <TotalPrice>
             <span>Итоговая цена:</span>

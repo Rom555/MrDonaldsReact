@@ -12,6 +12,8 @@ import { useAuth } from './Components/Hooks/useAuth';
 const firebaseConfig = {
   apiKey: 'AIzaSyCvdoXD2QNVzAoEJO9IdnzEqhirZlr_vDI',
   authDomain: 'mrdonalds-3e10a.firebaseapp.com',
+  databaseURL:
+    'https://mrdonalds-3e10a-default-rtdb.asia-southeast1.firebasedatabase.app',
   projectId: 'mrdonalds-3e10a',
   storageBucket: 'mrdonalds-3e10a.appspot.com',
   messagingSenderId: '578148200518',
