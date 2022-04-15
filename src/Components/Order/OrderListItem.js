@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import trashImage from '../../image/trash.svg';
+import { Context } from '../Context';
 import { toRub, totalPrice } from '../helper';
 
 const OrderItemStyled = styled.li`
@@ -41,7 +42,10 @@ const Toppings = styled.div`
   max-width: 320px;
 `;
 
-export const OrderListItem = ({ order, deleteOrder, index, setOpenItem }) => {
+export const OrderListItem = ({ order, deleteOrder, index }) => {
+  const {
+    openItem: { setOpenItem },
+  } = useContext(Context);
   const refDeleteButton = useRef(null);
 
   return (

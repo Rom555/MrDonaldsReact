@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { ListItem } from './ListItem';
 import Banner from '../../image/banner.png';
 import { Preloader } from '../Style/Preloader';
+import { useDB } from '../Hooks/useDB';
+import { useContext } from 'react';
+import { Context } from '../Context';
 
 const MenuStyled = styled.main`
   background-color: #ccc;
@@ -21,24 +24,29 @@ const BannerSection = styled.div`
   background-size: cover;
 `;
 
-export const Menu = ({ setOpenItem, dbMenu }) => (
-  <MenuStyled>
-    <BannerSection />
+export const Menu = () => {
+  const { database } = useContext(Context);
+  const dbMenu = useDB(database);
 
-    {dbMenu ? (
-      <>
-        <SectionMenu>
-          <h2>Бургеры</h2>
-          <ListItem itemList={dbMenu.burger} setOpenItem={setOpenItem} />
-        </SectionMenu>
+  return (
+    <MenuStyled>
+      <BannerSection />
 
-        <SectionMenu>
-          <h2>Закуски/Напитки</h2>
-          <ListItem itemList={dbMenu.other} setOpenItem={setOpenItem} />
-        </SectionMenu>
-      </>
-    ) : (
-      <Preloader />
-    )}
-  </MenuStyled>
-);
+      {dbMenu ? (
+        <>
+          <SectionMenu>
+            <h2>Бургеры</h2>
+            <ListItem itemList={dbMenu.burger} />
+          </SectionMenu>
+
+          <SectionMenu>
+            <h2>Закуски/Напитки</h2>
+            <ListItem itemList={dbMenu.other} />
+          </SectionMenu>
+        </>
+      ) : (
+        <Preloader />
+      )}
+    </MenuStyled>
+  );
+};

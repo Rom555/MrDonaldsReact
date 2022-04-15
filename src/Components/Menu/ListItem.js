@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { Context } from '../Context';
 import { toRub } from '../helper';
 
 const List = styled.ul`
@@ -39,13 +41,18 @@ const Item = styled.li`
   }
 `;
 
-export const ListItem = ({ itemList, setOpenItem }) => (
-  <List>
-    {itemList.map((item) => (
-      <Item key={item.id} img={item.img} onClick={() => setOpenItem(item)}>
-        <p>{item.name}</p>
-        <p>{toRub(item.price)}</p>
-      </Item>
-    ))}
-  </List>
-);
+export const ListItem = ({ itemList }) => {
+  const {
+    openItem: { setOpenItem },
+  } = useContext(Context);
+  return (
+    <List>
+      {itemList.map((item) => (
+        <Item key={item.id} img={item.img} onClick={() => setOpenItem(item)}>
+          <p>{item.name}</p>
+          <p>{toRub(item.price)}</p>
+        </Item>
+      ))}
+    </List>
+  );
+};

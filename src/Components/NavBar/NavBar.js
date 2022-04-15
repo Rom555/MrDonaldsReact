@@ -1,6 +1,8 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import logoImg from '../../image/logo.svg';
 import signImg from '../../image/sign.svg';
+import { Context } from '../Context';
 
 const NavBarStyled = styled.header`
   position: fixed;
@@ -58,33 +60,39 @@ const LogOutBtn = styled.span`
   cursor: pointer;
 `;
 
-export const NavBar = ({ authentication, logIn, logOut }) => (
-  <NavBarStyled>
-    <Logo>
-      <ImgLogo src={logoImg} alt='logo' />
-      <H1>MrDonalds</H1>
-    </Logo>
-    {authentication ? (
-      <div>
-        <User>
-          <Figure>
-            <img
-              src={authentication.reloadUserInfo.photoUrl}
-              alt={authentication.displayName}
-            />
-            <figcaption>{authentication.displayName}</figcaption>
-          </Figure>
+export const NavBar = () => {
+  const {
+    auth: { authentication, logIn, logOut },
+  } = useContext(Context);
 
-          <LogOutBtn onClick={logOut}>X</LogOutBtn>
-        </User>
-      </div>
-    ) : (
-      <LogInBtn onClick={logIn}>
-        <Figure>
-          <img src={signImg} alt='войти' />
-          <figcaption>войти</figcaption>
-        </Figure>
-      </LogInBtn>
-    )}
-  </NavBarStyled>
-);
+  return (
+    <NavBarStyled>
+      <Logo>
+        <ImgLogo src={logoImg} alt='logo' />
+        <H1>MrDonalds</H1>
+      </Logo>
+      {authentication ? (
+        <div>
+          <User>
+            <Figure>
+              <img
+                src={authentication.reloadUserInfo.photoUrl}
+                alt={authentication.displayName}
+              />
+              <figcaption>{authentication.displayName}</figcaption>
+            </Figure>
+
+            <LogOutBtn onClick={logOut}>X</LogOutBtn>
+          </User>
+        </div>
+      ) : (
+        <LogInBtn onClick={logIn}>
+          <Figure>
+            <img src={signImg} alt='войти' />
+            <figcaption>войти</figcaption>
+          </Figure>
+        </LogInBtn>
+      )}
+    </NavBarStyled>
+  );
+};
